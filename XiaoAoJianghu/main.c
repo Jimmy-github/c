@@ -28,7 +28,7 @@ int main(int argc, const char * argv[]) {
     ShowInformation();
     ShowMianMenu();
     
-    printf("test");
+   
     
     
     return 0;
