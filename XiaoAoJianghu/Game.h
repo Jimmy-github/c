@@ -126,6 +126,12 @@ void ShowWelcome();
 /* 显示游戏地图*/
 void ShowMap();
 
+/*显示当前地图信息*/
+
+void ShowMapInfo();
+
+/*首次显示地图信息*/
+void ShowMapInfoFirst();
 /* 刷新地图时后地图会下滑一行，所以要加1*/
 void ShowMapRefresh();
 /*显示游戏地图下方信息*/
@@ -133,6 +139,10 @@ void ShowInformation();
 /*显示游戏主菜单*/
 
 void ShowMianMenu();
+
+/*从 x y 开始清除rowCount行*/
+
+void Clear(int x,int y,int rowCount);
 
 
 

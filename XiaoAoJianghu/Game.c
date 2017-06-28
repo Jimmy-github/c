@@ -17,7 +17,8 @@ extern  int x_pos,y_pos;
 
 Map mapArray[8][8]={
     {
-        {1,"天山",1,{0,0},"这里充满了西域文化！"},{1,"楼兰",1,{1,0},"这里充满了西域文化！"},
+        {1,"天山",1,{0,0},"最早的源头是剑术大师霍行仲，当年霍行仲因战乱避于西域，其心雄万丈，也曾远游中原，矢志搜集各家剑谱，想以毕生之力，开创「天山剑派」。「天山派」刚开始时分成南北两派，南派为凌云凤执掌，北派为霍天都当家，合并后主要定居于天山南高峰，在两条冰川汇聚之处的冰塔群里。"},
+        {1,"楼兰",1,{1,0},"这里充满了西域文化！"},
         {1,"白驼山",1,{2,0},"这里充满了西域文化！"},{1,"野猪林",1,{3,0},"这里充满了西域文化！"},
         {1,"水晶洞",1,{4,0},"这里充满了西域文化！"},{1,"天蚕洞",1,{5,0},"这里充满了西域文化！"},
         {1,"黑风寨",1,{6,0},"这里充满了西域文化！"},{1,"冰火岛",1,{7,0},"这里充满了西域文化！"}
@@ -175,12 +176,17 @@ void ShowMap(){
         
     }
     
-    SetPosition(MARGIN_X, START_LINE+3+i);
+    
+    
+    
+   
     MAP_END_LINE=START_LINE+3+i;
+    SetPosition(MARGIN_X, START_LINE+3+i);
     SetTextColor(SEP);
     
     
     
+    ShowMapInfoFirst();
 }
 
 
@@ -224,7 +230,9 @@ void ShowMapRefresh(){
     MAP_END_LINE=START_LINE+3+i;
     SetTextColor(SEP);
     
+     ShowMapInfo();
     
+
     
 }
 /*显示游戏地图下方信息*/
@@ -269,7 +277,7 @@ void ShowMianMenu(){
                 SetTextColor("1.自我欣赏");
                 break;
             case 2:
-                SetTextColor("2.查找怪物");
+                SetTextColor("2.清除信息");
                 break;
             default:
                 break;
@@ -300,20 +308,36 @@ void ShowMianMenu(){
     
     while(1){
         
+       
         
         SetPosition(MARGIN_X+22, INFO_END_LINE+i-margin_down-1);
        // printf("\033[2J"); //清屏
-    
+     
+        
     
         
         
         printf("\033[K");
         // /033[K   清除从光标到行尾的内容
+        
+        
+        /*补充 | */
+        SetPosition(MARGIN_X+WIDTH-1, INFO_END_LINE+i-margin_down-1);
+        SetTextColor("|");
+        SetPosition(MARGIN_X+22, INFO_END_LINE+i-margin_down-1);
+        
+        
         key= getInputKey();
+        
+        
+        
         SetPosition(MARGIN_X+2, INFO_END_LINE+i-margin_down);
         printf("\033[K");
        
-       
+        /*补充 | */
+        SetPosition(MARGIN_X+WIDTH-1, INFO_END_LINE+i-margin_down);
+        SetTextColor("|");
+        SetPosition(MARGIN_X+2, INFO_END_LINE+i-margin_down);
         
         keynum=key;
         
@@ -322,7 +346,8 @@ void ShowMianMenu(){
                 SetTextColorYellow("您选择了菜单游戏1");
                 break;
             case 50:
-               SetTextColorYellow("您选择了菜单游戏2");
+               SetTextColorYellow("您选择了清除信息");
+                 Clear(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
                 break;
             case 51:
                  SetTextColorYellow("您选择了菜单游戏3");
@@ -335,6 +360,7 @@ void ShowMianMenu(){
                 break;
             case 54:
                 SetTextColorYellow("您选择了菜单游戏6");
+               
                 break;
             case -128:
                 SetTextColorYellow("您按了 "); SetTextColorRedBold("↑");SetTextColorYellow(" 箭头");
@@ -449,6 +475,108 @@ char  getInputKey(){
 }
 
 
+/*显示当前地图信息*/
+
+void ShowMapInfo(){
+    
+    
+    //1.清除信息窗消息
+     Clear(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
+    
+    //2. 显示玩家当前所在地图信息
+    SetPosition(MARGIN_X+20, MAP_END_LINE);
+    SetTextColor("玩家当前所在地图是《");
+    SetTextColor(mapArray[y_pos][x_pos].name);
+    SetTextColor("》");
+    
+    
+     int lines=strlen(mapArray[y_pos][x_pos].desc)/108;
+    
+    
+    char temp[108];
+    for(int i=0;i<=lines;i++){
+        SetPosition(MARGIN_X+3, MAP_END_LINE+i+1);
+        
+        for(int j=0;j<108;j++){
+            
+            temp[j]='\0';
+            temp[j]=mapArray[y_pos][x_pos].desc[i*108+j];
+            //printf("%c",mapArray[y_pos][x_pos].desc[i*108+j]);
+            
+           // printf("\033[32m%c\033[0m",mapArray[y_pos][x_pos].desc[i*108+j]);
+        }
+        SetTextColor(temp);
+       
+        
+        
+    }
+    
+   
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+   
+}
+
+/*从 x y 开始清除rowCount行,用空格替换*/
+
+void Clear(int x,int y,int rowCount){
+    
+    int i,j;
+    for (i=0; i<rowCount; i++) {
+        SetPosition(x, y+i);
+        for (j=0; j<WIDTH-2; j++) {
+            printf(" ");
+        }
+    }
+}
+
+/*首次显示地图信息*/
+void ShowMapInfoFirst(){
+    
+//    SetPosition(MARGIN_X+2, MAP_END_LINE+1);
+//    printf("玩家当前所在地图是《%s》",mapArray[y_pos][x_pos].name);
+//    
+//    
+    
+    //1.清除信息窗消息
+    Clear(MARGIN_X+1,MAP_END_LINE+1,INFORMATION_HEIGHT);
+    
+    //2. 显示玩家当前所在地图信息
+    SetPosition(MARGIN_X+20, MAP_END_LINE+1);
+    SetTextColor("玩家当前所在地图是《");
+    SetTextColor(mapArray[y_pos][x_pos].name);
+    SetTextColor("》");
+    
+    
+    int lines=strlen(mapArray[y_pos][x_pos].desc)/108;
+    
+    
+    char temp[108];
+    for(int i=0;i<=lines;i++){
+        SetPosition(MARGIN_X+3, MAP_END_LINE+i+1+1);
+        
+        for(int j=0;j<108;j++){
+            
+            temp[j]='\0';
+            temp[j]=mapArray[y_pos][x_pos].desc[i*108+j];
+            //printf("%c",mapArray[y_pos][x_pos].desc[i*108+j]);
+            
+            // printf("\033[32m%c\033[0m",mapArray[y_pos][x_pos].desc[i*108+j]);
+        }
+        SetTextColor(temp);
+        
+        
+        
+    }
+}
 
 
 
