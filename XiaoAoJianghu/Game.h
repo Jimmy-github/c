@@ -29,7 +29,7 @@
 
 //界面边距
 #define MARGIN_X 15
-#define INFORMATION_HEIGHT 7
+#define INFORMATION_HEIGHT 9
 
 #define MAIN_MENU_HEIGHT 20
 
@@ -49,7 +49,8 @@ static int INFO_END_LINE;
 
 static int MENU_END_LINE;
 
-
+//菜单窗口获得光标
+static int MAPINFO_GET_CURSOR=1;
 
 
 char *input;
@@ -187,9 +188,13 @@ void ShowInformation();
 
 void ShowMianMenu();
 
-/*从 x y 开始清除rowCount行*/
+void HideMainMenu();
 
-void Clear(int x,int y,int rowCount);
+/*从 x y 开始清除rowCount地图行宽度*/
+
+void ClearContent(int x,int y,int rowCount);
+
+void ClearLine(int x,int y,int rowCount);
 
 /*处理游戏*/
 
@@ -201,6 +206,8 @@ void ShowPlayerInfo();
 /*在信息界面显示 当前地图怪物资料*/
 void ShowMosters();
 
+/* 退出打怪*/
+void QuitFight();
 
 
 

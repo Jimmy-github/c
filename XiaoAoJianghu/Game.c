@@ -184,7 +184,7 @@ void ShowWelcome(char *text){
     SetPosition(MARGIN_X, START_LINE+2);
     SetTextColor(SEP);
     
-  
+    
     
 }
 /* 显示游戏地图*/
@@ -223,7 +223,7 @@ void ShowMap(){
     
     
     
-   
+    
     MAP_END_LINE=START_LINE+3+i;
     SetPosition(MARGIN_X, START_LINE+3+i);
     SetTextColor(SEP);
@@ -236,7 +236,7 @@ void ShowMap(){
 
 /* 刷新地图时后地图会下滑一行，所以要加1*/
 void ShowMapRefresh(){
-
+    
     int i;
     for ( i=0; i<8; i++) {
         
@@ -271,9 +271,9 @@ void ShowMapRefresh(){
     MAP_END_LINE=START_LINE+3+i;
     SetTextColor(SEP);
     
-     ShowMapInfo();
+    ShowMapInfo();
     
-
+    
     
 }
 /*显示游戏地图下方信息*/
@@ -326,7 +326,7 @@ void ShowMianMenu(){
             case 4:
                 SetTextColor("4.购买装备");
                 break;
-            
+                
                 
                 
             default:
@@ -354,17 +354,17 @@ void ShowMianMenu(){
     
     
     
-    input=(char *)malloc(100);;
+    input=(char *)malloc(100);
     
     while(1){
         
-       
+        
         
         SetPosition(MARGIN_X+26, INFO_END_LINE+i-margin_down-1);
-       // printf("\033[2J"); //清屏
-     
+        // printf("\033[2J"); //清屏
         
-    
+        
+        
         
         
         printf("\033[K");
@@ -383,7 +383,7 @@ void ShowMianMenu(){
         
         SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+i-margin_down);
         printf("\033[K");
-       
+        
         /*补充 | */
         SetPosition(MARGIN_X+WIDTH-1, INFO_END_LINE+i-margin_down);
         SetTextColor("|");
@@ -391,7 +391,7 @@ void ShowMianMenu(){
         
         keynum=key;
         
-       
+        
         
         switch (keynum) {
             case 49:
@@ -400,12 +400,12 @@ void ShowMianMenu(){
                 
                 break;
             case 50:
-                 SetTextColor("您选择了->");
-                 SetTextColorPurple("查找怪物");
-              
+                SetTextColor("您选择了->");
+                SetTextColorPurple("查找怪物");
+                
                 break;
             case 51:
-                 SetTextColorPurple("您选择了菜单游戏3");
+                SetTextColorPurple("您选择了菜单游戏3");
                 break;
             case 52:
                 SetTextColorPurple("您选择了菜单游戏4");
@@ -415,7 +415,7 @@ void ShowMianMenu(){
                 break;
             case 54:
                 SetTextColorPurple("您选择了菜单游戏6");
-               
+                
                 break;
             case -128:
                 SetTextColor("您按了 "); SetTextColorWhiteBold("↑");SetTextColor("  箭头");
@@ -430,13 +430,13 @@ void ShowMianMenu(){
                 
                 break;
             case -125:
-                  SetTextColor("您按了 ");SetTextColorWhiteBold("→");SetTextColor("  箭头");
+                SetTextColor("您按了 ");SetTextColorWhiteBold("→");SetTextColor("  箭头");
                 if(x_pos==7){
                     x_pos=0;
                 }else{
                     x_pos++;
                 }
-                 ShowMapRefresh();
+                ShowMapRefresh();
                 break;
             case -127:
                 SetTextColor("您按了 ");SetTextColorWhiteBold("↓");SetTextColor("  箭头");
@@ -446,27 +446,29 @@ void ShowMianMenu(){
                     y_pos++;
                 }
                 
-                 ShowMapRefresh();
+                ShowMapRefresh();
                 
                 break;
             case -126:
-                 SetTextColor("您按了 ");SetTextColorWhiteBold("←");SetTextColor("  箭头");
+                SetTextColor("您按了 ");SetTextColorWhiteBold("←");SetTextColor("  箭头");
                 if(x_pos==0){
                     x_pos=7;
                 }else{
                     x_pos--;
                 }
-                 ShowMapRefresh();
+                ShowMapRefresh();
                 break;
-            
+                
             default:
                 break;
         }
         
-         ProcessGameMenu(keynum);
+        ProcessGameMenu(keynum);
         
-      
+        
     }
+    
+    
 }
 
 
@@ -520,7 +522,7 @@ char  getInputKey(){
     
     else{
         int k=*(input+len-1);
-         //printf(":%d:",k);
+        //printf(":%d:",k);
         return k;
     }
     
@@ -538,9 +540,9 @@ void ShowMapInfo(){
     
     
     //1.清除信息窗消息
-     Clear(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
+    ClearContent(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
     
-  
+    
     //2. 显示玩家当前所在地图信息
     SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
     SetTextColorBold("玩家当前所在地图是《");
@@ -548,7 +550,7 @@ void ShowMapInfo(){
     SetTextColorBold("》");
     
     
-     int lines=strlen(mapArray[y_pos][x_pos].desc)/108;
+    int lines=strlen(mapArray[y_pos][x_pos].desc)/108;
     
     
     char temp[108];
@@ -561,17 +563,14 @@ void ShowMapInfo(){
             temp[j]=mapArray[y_pos][x_pos].desc[i*108+j];
             //printf("%c",mapArray[y_pos][x_pos].desc[i*108+j]);
             
-           // printf("\033[32m%c\033[0m",mapArray[y_pos][x_pos].desc[i*108+j]);
+            // printf("\033[32m%c\033[0m",mapArray[y_pos][x_pos].desc[i*108+j]);
         }
         SetTextColor(temp);
-       
+        
         
         
     }
     
-   
-    
-  
     
     
     
@@ -580,12 +579,15 @@ void ShowMapInfo(){
     
     
     
-   
+    
+    
+    
+    
 }
 
-/*从 x y 开始清除rowCount行,用空格替换*/
+/*从 x y 开始清除rowCount行长度为内容行,用空格替换*/
 
-void Clear(int x,int y,int rowCount){
+void ClearContent(int x,int y,int rowCount){
     
     int i,j;
     for (i=0; i<rowCount; i++) {
@@ -595,17 +597,27 @@ void Clear(int x,int y,int rowCount){
         }
     }
 }
+/*从 x y 开始清除rowCount行长度为一整行,用空格替换*/
+void ClearLine(int x,int y,int rowCount){
+    int i,j;
+    for (i=0; i<rowCount; i++) {
+        SetPosition(x, y+i);
+        for (j=0; j<WIDTH; j++) {
+            printf(" ");
+        }
+    }
+}
 
 /*首次显示地图信息*/
 void ShowMapInfoFirst(){
     
-//    SetPosition(MARGIN_X+2, MAP_END_LINE+1);
-//    printf("玩家当前所在地图是《%s》",mapArray[y_pos][x_pos].name);
-//    
-//    
+    //    SetPosition(MARGIN_X+2, MAP_END_LINE+1);
+    //    printf("玩家当前所在地图是《%s》",mapArray[y_pos][x_pos].name);
+    //
+    //
     
     //1.清除信息窗消息
-    Clear(MARGIN_X+1,MAP_END_LINE+1,INFORMATION_HEIGHT);
+    ClearContent(MARGIN_X+1,MAP_END_LINE+1,INFORMATION_HEIGHT);
     
     //2. 显示玩家当前所在地图信息
     SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE+1);
@@ -625,7 +637,7 @@ void ShowMapInfoFirst(){
             
             temp[j]='\0';
             temp[j]=mapArray[y_pos][x_pos].desc[i*108+j];
-          
+            
         }
         SetTextColor(temp);
         
@@ -661,10 +673,10 @@ void ProcessGameMenu(int keynumn){
 /* 显示玩家个人资料*/
 void ShowPlayerInfo(){
     //1.清除信息窗消息
-    Clear(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
+    ClearContent(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
     
     //2. 显示玩家资料
-   
+    
     
     SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
     SetTextColorBold("《");
@@ -672,7 +684,7 @@ void ShowPlayerInfo(){
     SetTextColorBold("》");
     SetTextColorBold("大侠您的资料如下");
     
-   
+    
     SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+1);
     SetTextColor("等级:");
     SetIntColorYellow(currentPlayer->level);
@@ -712,10 +724,10 @@ void ShowMosters(){
     
     
     //1.清除信息窗消息
-    Clear(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
+    ClearContent(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
     //2.显示怪物信息
     
-   
+    
     //怪物总数
     int monsterCount=sizeof(Monsters)/sizeof(Monster);
     //当前地图怪物总数
@@ -755,18 +767,152 @@ void ShowMosters(){
             
             SetTextColorYellow((Monsters+currentMapMonsterIndexs[j])->name);
             
-             SetPosition(MARGIN_X+18, MAP_END_LINE+j+1);
+            SetPosition(MARGIN_X+18, MAP_END_LINE+j+1);
             printf("\033[32m(怪物级别:%s)\033[0m",* (levelNames+((Monsters+currentMapMonsterIndexs[j])->level)-1));
-         
+            
         }
+        
+        
+        HideMainMenu();
+        
+        MAPINFO_GET_CURSOR=1;
+        //将光标定位到信息框，让用户输入打怪编号
+        while(MAPINFO_GET_CURSOR){
+            
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+INFORMATION_HEIGHT-2);
+      
+            printf("\033[K");
+            
+            SetPosition(MARGIN_X+WIDTH-1, MAP_END_LINE+INFORMATION_HEIGHT-2);
+            SetTextColor("|");
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+INFORMATION_HEIGHT-2);
+            SetTextColorBold("请输入要攻击的怪物编号(按0返回):");
+            
+            key= getInputKey();
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+INFORMATION_HEIGHT-1);
+            printf("\033[K");
+            
+            SetPosition(MARGIN_X+WIDTH-1, MAP_END_LINE+INFORMATION_HEIGHT-1);
+            SetTextColor("|");
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+INFORMATION_HEIGHT-1);
+            
+             keynum=key;
+            
+            switch (keynum) {
+                case 48:     //按0
+                    SetTextColor("您选择了->");
+                    SetTextColorPurple("退出");
+                    
+                    MAPINFO_GET_CURSOR=0;
+                    
+                    QuitFight();
+                    
+                    
+                    break;
+                    
+                    
+                case 49:
+                    SetTextColor("您选择了->");
+                    SetTextColorPurple("打怪兽1");
+                    
+                    break;
+                case 50:
+                    SetTextColor("您选择了->");
+                    SetTextColorPurple("打怪物2");
+                    
+                    break;
+                case 51:
+                    SetTextColor("您选择了->");
+                    SetTextColorPurple("打怪物3");
+                    break;
+                case 52:
+                    SetTextColor("您选择了->");
+                    SetTextColorPurple("打怪物4");
+                    break;
+                case 53:
+                    SetTextColor("您选择了->");
+                    SetTextColorPurple("打怪物5");
+                    break;
+                case 54:
+                    SetTextColor("您选择了->");
+                    SetTextColorPurple("打怪物6");
+                    
+                    break;
+                    
+                    
+                default:
+                    break;
+            }
+            
+            
+            
+            
+        }
+        
+     
+        
+    
+        
+        
         //让玩家选择要pk的怪物编号，调用Fight函数
-        
-        
-        
+   
         
     }
-  
     
+
+    
+}
+
+
+/* 退出打怪*/
+void QuitFight(){
+    ShowMapInfo();
+  int i;
+   for (i=0; i<MAIN_MENU_HEIGHT-2; i++) {
+        
+        SetPosition(MARGIN_X, INFO_END_LINE+i);
+        SetTextColor("|");
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+i);
+        switch (i) {
+            case 0:
+                SetTextColorBold("游戏菜单：");
+                
+                break;
+            case 1:
+                SetTextColor("1.自我欣赏");
+                break;
+            case 2:
+                SetTextColor("2.查找怪物");
+                break;
+            case 3:
+                SetTextColor("3.回总舵");
+                break;
+            case 4:
+                SetTextColor("4.购买装备");
+                break;
+            default:
+                break;
+        }
+        SetPosition(MARGIN_X+WIDTH-1, INFO_END_LINE+i);
+        SetTextColor("|");
+       
+       
+        
+    }
+
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+i-2);
+   
+        SetTextColorBold("请在这里输入您的命令:");
+    
+        SetPosition(MARGIN_X, INFO_END_LINE+i);
+        SetTextColor(SEP);
+    
+}
+
+void HideMainMenu(){
+    ClearLine(MARGIN_X,INFO_END_LINE,MAIN_MENU_HEIGHT);
     
 }
 
