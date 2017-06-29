@@ -35,14 +35,22 @@ void SetTextColor(char *text){
     
 }
 
+
+
 void SetTextColorYellow(char *text){
     //printf("\033[01;34;42m %s\033[0m",text);
     printf("\033[33m%s\033[0m",text);
     
 }
+void SetTextColorYellowBold(char *text){
+    //printf("\033[01;34;42m %s\033[0m",text);
+    printf("\033[01;33m%s\033[0m",text);
+    
+}
+
 
 //紫色
-void SetSetTextColorPurple(char *text){
+void SetTextColorPurple(char *text){
     printf("\033[35m%s\033[0m",text);
 }
 

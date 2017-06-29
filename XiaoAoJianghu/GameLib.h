@@ -17,9 +17,13 @@ void SetTitle(char *title);
 
 void SetTextColor(char *text);
 
+
+
 void SetTextColorYellow(char *text);
 
-void SetSetTextColorPurple(char *text);
+void SetTextColorYellowBold(char *text);
+
+void SetTextColorPurple(char *text);
 
 void SetTextColorRedBold(char *text);
 

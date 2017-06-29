@@ -28,10 +28,14 @@
 #define WIDTH 78
 
 //界面边距
-#define MARGIN_X 10
+#define MARGIN_X 15
 #define INFORMATION_HEIGHT 7
 
 #define MAIN_MENU_HEIGHT 20
+
+#define TITLE_MARGIN_LEFT 27
+
+#define WORLD_MARGIN_LEFT 4
 
 
 //从第几行可是界面显示
