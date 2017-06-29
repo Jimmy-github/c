@@ -102,7 +102,7 @@ Player Players[]={
 Monster Monsters[]={
     
     {.id=1,.name="海绵宝宝",.level=1,.hp=100,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
-    {.id=2,.name="凤姐",.level=2,.hp=200,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=2,.name="凤姐",.level=2,.hp=200,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=1,.coord.y=0},
     {.id=3,.name="罗永浩",.level=4,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
     {.id=4,.name="习大大",.level=9,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
     {.id=5,.name="老夫子",.level=4,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0}
@@ -800,52 +800,30 @@ void ShowMosters(){
             
              keynum=key;
             
-            switch (keynum) {
-                case 48:     //按0
-                    SetTextColor("您选择了->");
-                    SetTextColorPurple("退出");
-                    
-                    MAPINFO_GET_CURSOR=0;
-                    
-                    QuitFight();
-                    
-                    
-                    break;
-                    
-                    
-                case 49:
-                    SetTextColor("您选择了->");
-                    SetTextColorPurple("打怪兽1");
-                    
-                    break;
-                case 50:
-                    SetTextColor("您选择了->");
-                    SetTextColorPurple("打怪物2");
-                    
-                    break;
-                case 51:
-                    SetTextColor("您选择了->");
-                    SetTextColorPurple("打怪物3");
-                    break;
-                case 52:
-                    SetTextColor("您选择了->");
-                    SetTextColorPurple("打怪物4");
-                    break;
-                case 53:
-                    SetTextColor("您选择了->");
-                    SetTextColorPurple("打怪物5");
-                    break;
-                case 54:
-                    SetTextColor("您选择了->");
-                    SetTextColorPurple("打怪物6");
-                    
-                    break;
-                    
-                    
-                default:
-                    break;
+            keynum=keynum-48;
+            //printf("%d,%d\n",keynum,currentMapMonsterCount);
+            
+            
+            if(keynum>=1&&keynum<currentMapMonsterCount+1){
+                
+                 SetTextColor("您选择了打->");
+               
+                SetTextColorYellow((Monsters+currentMapMonsterIndexs[keynum-1])->name);
+            }
+            else if(keynum==0){
+                SetTextColor("您选择了->");
+                SetTextColorPurple("退出");
+                
+                MAPINFO_GET_CURSOR=0;
+                QuitFight();
+                
+            }else{
+                
+                SetTextColor("您输入的怪物编号不存在哟～");
+               
             }
             
+          
             
             
             
@@ -913,6 +891,11 @@ void QuitFight(){
 
 void HideMainMenu(){
     ClearLine(MARGIN_X,INFO_END_LINE,MAIN_MENU_HEIGHT);
+    
+}
+
+/*打怪*/
+void FightMoster(Monster *moster){
     
 }
 

@@ -208,8 +208,8 @@ void ShowMosters();
 
 /* 退出打怪*/
 void QuitFight();
-
-
+/*打怪*/
+void FightMoster(Monster *moster);
 
 
 
