@@ -73,7 +73,56 @@ Prop propArrary[]={
     {3,"玉液琼浆",3,5,15000,Con,.minPower=100,.maxPower=500,"蟠桃会上御用饮品"},
     
 };
+
+
+
+Player Players[]={
+    {.id=9527,.name="唐伯虎",.pass="123456",.life=100,.level=3,.exp=1,.hp=10000,.mp=5000,.mpMax=900000,.gold=10000000,.coord.x=3,.coord.y=1},
+    {.id=9528,.name="祝枝山",.pass="123456",.life=100,.level=3,.exp=1,.hp=10000,.mp=5000,.mpMax=900000,.gold=10000000,.coord.x=2,.coord.y=0},
+};
+
+/*typedef struct _monster{
+ 
+ int id;
+ char name[50];
+ int level; //怪物级别
+ int hp;//怪物生命值
+ int att; //怪物攻击力
+ int diff;//怪物防御
+ int minMoney;//杀死怪物掉落最小金币
+ int maxMoney;//杀死怪物玩家获得的经验值
+ int exp;//杀死怪物玩家获得的道具列表
+ int state;//怪物当前状态， 0 怪物死 1怪物活
+ 
+ Coord coord; //怪物当前所在地图坐标
+ 
+ }Monster;*/
+
+
+Monster Monsters[]={
+    
+    {.id=1,.name="海绵宝宝",.level=1,.hp=100,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=2,.name="凤姐",.level=2,.hp=200,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=3,.name="罗永浩",.level=1,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=4,.name="习大大",.level=1,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=5,.name="老夫子",.level=1,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    
+    {.id=1,.name="海绵宝宝",.level=1,.hp=100,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=2,.name="凤姐",.level=2,.hp=200,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=3,.name="罗永浩",.level=1,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=4,.name="习大大",.level=1,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=5,.name="老夫子",.level=1,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    
+    {.id=6,.name="小鬼子",.level=1,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=1}
+    
+};
+
+Player *currentPlayer;
 void Init(){//初始化游戏数据
+    //设置当前登录玩家
+    currentPlayer=Players;
+    
+    currentPlayer->weapon=propArrary[0];
     
     
 };
@@ -192,10 +241,7 @@ void ShowMap(){
 
 /* 刷新地图时后地图会下滑一行，所以要加1*/
 void ShowMapRefresh(){
-//    ShowWelcome("欢迎来到笑傲江湖世界!!!\n");
-//    ShowMap();
-//    ShowInformation();
-//    ShowMianMenu();
+
     int i;
     for ( i=0; i<8; i++) {
         
@@ -277,8 +323,17 @@ void ShowMianMenu(){
                 SetTextColor("1.自我欣赏");
                 break;
             case 2:
-                SetTextColor("2.清除信息");
+                SetTextColor("2.查找怪物");
                 break;
+            case 3:
+                SetTextColor("3.回总舵");
+                break;
+            case 4:
+                SetTextColor("4.购买装备");
+                break;
+            
+                
+                
             default:
                 break;
         }
@@ -341,29 +396,32 @@ void ShowMianMenu(){
         
         keynum=key;
         
+       
+        
         switch (keynum) {
             case 49:
-                SetTextColorYellow("您选择了菜单游戏1");
+                SetSetTextColorPurple("您选择了菜单游戏1");
+                
                 break;
             case 50:
-               SetTextColorYellow("您选择了清除信息");
-                 Clear(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
+               SetSetTextColorPurple("您选择了清除信息");
+              
                 break;
             case 51:
-                 SetTextColorYellow("您选择了菜单游戏3");
+                 SetSetTextColorPurple("您选择了菜单游戏3");
                 break;
             case 52:
-                SetTextColorYellow("您选择了菜单游戏4");
+                SetSetTextColorPurple("您选择了菜单游戏4");
                 break;
             case 53:
-                SetTextColorYellow("您选择了菜单游戏5");
+                SetSetTextColorPurple("您选择了菜单游戏5");
                 break;
             case 54:
-                SetTextColorYellow("您选择了菜单游戏6");
+                SetSetTextColorPurple("您选择了菜单游戏6");
                
                 break;
             case -128:
-                SetTextColorYellow("您按了 "); SetTextColorRedBold("↑");SetTextColorYellow(" 箭头");
+                SetSetTextColorPurple("您按了 "); SetTextColorWhiteBold("↑");SetSetTextColorPurple(" 箭头");
                 if(y_pos==0){
                     y_pos=7;
                 }else{
@@ -375,7 +433,7 @@ void ShowMianMenu(){
                 
                 break;
             case -125:
-                  SetTextColorYellow("您按了 ");SetTextColorRedBold("→");SetTextColorYellow(" 箭头");
+                  SetSetTextColorPurple("您按了 ");SetTextColorWhiteBold("→");SetSetTextColorPurple(" 箭头");
                 if(x_pos==7){
                     x_pos=0;
                 }else{
@@ -384,7 +442,7 @@ void ShowMianMenu(){
                  ShowMapRefresh();
                 break;
             case -127:
-                SetTextColorYellow("您按了 ");SetTextColorRedBold("↓");SetTextColorYellow(" 箭头");
+                SetSetTextColorPurple("您按了 ");SetTextColorWhiteBold("↓");SetSetTextColorPurple(" 箭头");
                 if(y_pos==7){
                     y_pos=0;
                 }else{
@@ -395,7 +453,7 @@ void ShowMianMenu(){
                 
                 break;
             case -126:
-                 SetTextColorYellow("您按了 ");SetTextColorRedBold("←");SetTextColorYellow(" 箭头");
+                 SetSetTextColorPurple("您按了 ");SetTextColorWhiteBold("←");SetSetTextColorPurple(" 箭头");
                 if(x_pos==0){
                     x_pos=7;
                 }else{
@@ -407,6 +465,8 @@ void ShowMianMenu(){
             default:
                 break;
         }
+        
+         ProcessGameMenu(keynum);
         
       
     }
@@ -567,9 +627,7 @@ void ShowMapInfoFirst(){
             
             temp[j]='\0';
             temp[j]=mapArray[y_pos][x_pos].desc[i*108+j];
-            //printf("%c",mapArray[y_pos][x_pos].desc[i*108+j]);
-            
-            // printf("\033[32m%c\033[0m",mapArray[y_pos][x_pos].desc[i*108+j]);
+          
         }
         SetTextColor(temp);
         
@@ -578,7 +636,119 @@ void ShowMapInfoFirst(){
     }
 }
 
+/*处理游戏*/
 
+void ProcessGameMenu(int keynumn){
+    
+    switch (keynum) {
+        case 49:   //游戏菜单1 显示玩家资料
+            ShowPlayerInfo();
+            break;
+        case 50:   //游戏菜单2
+            ShowMosters();
+            break;
+        case 51:   //游戏菜单3
+            
+            break;
+        case 52:   //游戏菜单4
+            
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
+/* 显示玩家个人资料*/
+void ShowPlayerInfo(){
+    //1.清除信息窗消息
+    Clear(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
+    
+    //2. 显示玩家资料
+   
+    
+
+    
+    
+    SetPosition(MARGIN_X+20, MAP_END_LINE);
+    SetTextColor("《");
+    SetTextColorYellow(currentPlayer->name);
+    SetTextColor("》");
+    SetTextColor("大侠你的资料如下");
+    
+   
+    SetPosition(MARGIN_X+2, MAP_END_LINE+1);
+    SetTextColor("等级:");
+    SetIntColorYellow(currentPlayer->level);
+    SetPosition(MARGIN_X+12, MAP_END_LINE+1);
+    SetTextColor("血量:");
+    SetIntColorYellow(currentPlayer->hp);
+    SetPosition(MARGIN_X+27, MAP_END_LINE+1);
+    SetTextColor("经验值:");
+    SetIntColorYellow(currentPlayer->exp);
+    SetPosition(MARGIN_X+37, MAP_END_LINE+1);
+    SetTextColor("内力:");
+    SetIntColorYellow(currentPlayer->mp);
+    
+    SetPosition(MARGIN_X+2, MAP_END_LINE+2);
+    
+    SetTextColor("当前武器:");
+    SetTextColorYellow(currentPlayer->weapon.name);
+    printf("\033[33m(%d/%d)\033[0m",currentPlayer->weapon.minAttack,currentPlayer->weapon.maxAttack);
+}
+
+
+/*在信息界面显示 当前地图怪物资料*/
+void ShowMosters(){
+    //1.清除信息窗消息
+    Clear(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
+    //2.显示怪物信息
+    
+   
+    //怪物总数
+    int monsterCount=sizeof(Monsters)/sizeof(Monster);
+    //当前地图怪物总数
+    int currentMapMonsterCount=0;
+    
+    int currentMapMonsterIndexs[INFORMATION_HEIGHT-1];
+    
+    int i;
+    for(i=0;i<monsterCount;i++){
+        if((Monsters+i)->coord.x==x_pos&&(Monsters+i)->coord.y==y_pos&&(Monsters+i)->state!=0){  //查找当前地图活着的怪物
+            currentMapMonsterIndexs[currentMapMonsterCount++]=i;
+            if(currentMapMonsterCount==INFORMATION_HEIGHT-1)
+                break;
+            
+            
+        }
+        
+        
+    }
+    
+    if(currentMapMonsterCount<=0){
+        SetPosition(MARGIN_X+20, MAP_END_LINE);
+        SetTextColor("当前地图很和平，没有怪物！！");
+    }
+    else{
+        
+        
+        SetPosition(MARGIN_X+20, MAP_END_LINE);
+        SetTextColor("当前地图怪物概况:");
+        for(int j=0;j<currentMapMonsterCount;j++){
+            
+            
+            SetPosition(MARGIN_X+2, MAP_END_LINE+j+1);
+            
+            
+            printf("\033[32m怪物%d:%s(怪物级别:%d)\033[0m",j+1,(Monsters+currentMapMonsterIndexs[j])->name,(Monsters+currentMapMonsterIndexs[j])->level);
+            
+        }
+    }
+  
+    
+    
+}
 
 
 

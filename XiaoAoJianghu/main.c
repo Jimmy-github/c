@@ -23,10 +23,12 @@
 int main(int argc, const char * argv[]) {
     
     SetTitle("笑傲江湖之-精忠报国");
+    Init();
     ShowWelcome("欢迎来到笑傲江湖世界!!!\n");
     ShowMap();
     ShowInformation();
     ShowMianMenu();
+    
     
    
     

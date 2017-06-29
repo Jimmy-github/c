@@ -41,9 +41,20 @@ void SetTextColorYellow(char *text){
     
 }
 
+//紫色
+void SetSetTextColorPurple(char *text){
+    printf("\033[35m%s\033[0m",text);
+}
+
 void SetTextColorRedBold(char *text){
     //printf("\033[01;34;42m %s\033[0m",text);
     printf("\033[01;31m%s\033[0m",text);
+    
+}
+
+void SetTextColorWhiteBold(char *text){
+    //printf("\033[01;34;42m %s\033[0m",text);
+    printf("\033[01;37m%s\033[0m",text);
     
 }
 
@@ -51,6 +62,14 @@ void SetTextColorBold(char *text){
     //printf("\033[01;34;42m %s\033[0m",text);
     printf("\033[01;32m%s\033[0m",text);
     
+}
+/*设置整型前景色*/
+void SetIntColor(int num){
+     printf("\033[32m%d\033[0m",num);
+}
+
+void SetIntColorYellow(int num){
+    printf("\033[33m%d\033[0m",num);
 }
 
 

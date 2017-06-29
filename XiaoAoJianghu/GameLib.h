@@ -18,7 +18,18 @@ void SetTitle(char *title);
 void SetTextColor(char *text);
 
 void SetTextColorYellow(char *text);
+
+void SetSetTextColorPurple(char *text);
+
 void SetTextColorRedBold(char *text);
+
+void SetTextColorWhiteBold(char *text);
+
+/*设置整型前景色*/
+void SetIntColor(int num);
+
+void SetIntColorYellow(int num);
+
 //字体加粗
 void SetTextColorBold(char *text);
 

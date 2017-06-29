@@ -118,6 +118,49 @@ typedef struct _prop {
     
 }Prop;
 
+
+/*定义玩家对象*/
+
+typedef struct _player{
+    int id;
+    char name[50];
+    char pass[50];
+    int life; //玩家生命值
+    int level;//玩家级别
+    int exp;//玩家经验值
+    int hp;//玩家血量
+    int mp;//玩家内力值
+    int mpMax;//当前级别玩家最大内力值
+    int gold;//玩家金币数量
+    
+    Prop weapon;//玩家武器
+    Prop armor;//玩家防具
+    Coord coord; //玩家当前所在地图坐标
+    
+    //门派
+    //背包
+    
+}Player;
+
+/*定义怪物对象*/
+
+typedef struct _monster{
+    
+    int id;
+    char name[50];
+    int level; //怪物级别
+    int hp;//怪物生命值
+    int att; //怪物攻击力
+    int diff;//怪物防御
+    int minMoney;//杀死怪物掉落最小金币
+    int maxMoney;//杀死怪物掉落最大金币
+    int exp;//杀死怪物玩家获得的经验值
+    int state;//怪物当前状态， 0 怪物死 1怪物活
+    //杀死怪物玩家获得的道具列表
+    Coord coord; //怪物当前所在地图坐标
+    
+}Monster;
+
 void Init();//初始化游戏数据
 void Show();//显示全局数据
 
@@ -144,9 +187,15 @@ void ShowMianMenu();
 
 void Clear(int x,int y,int rowCount);
 
+/*处理游戏*/
 
+void ProcessGameMenu(int keynum);
 
+/* 显示玩家个人资料*/
+void ShowPlayerInfo();
 
+/*在信息界面显示 当前地图怪物资料*/
+void ShowMosters();
 
 
 
