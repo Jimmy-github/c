@@ -155,13 +155,16 @@ typedef struct _player{
     int id;
     char name[50];
     char pass[50];
-    int life; //玩家生命值
+    
     int level;//玩家级别
     int exp;//玩家经验值
     int hp;//玩家血量
     int mp;//玩家内力值
-    int mpMax;//当前级别玩家最大内力值
+    
     int gold;//玩家金币数量
+    
+    int att; //玩家攻击力
+    int diff;//玩家防御力
     
     Prop weapon;//玩家武器
     Prop armor;//玩家防具
@@ -185,6 +188,7 @@ typedef struct _monster{
     int minMoney;//杀死怪物掉落最小金币
     int maxMoney;//杀死怪物掉落最大金币
     int exp;//杀死怪物玩家获得的经验值
+    int mp;//杀死怪物玩家获得的内力值
     int state;//怪物当前状态， 0 怪物死 1怪物活
     //杀死怪物玩家获得的道具列表
     Coord coord; //怪物当前所在地图坐标
