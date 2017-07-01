@@ -81,31 +81,30 @@ Player Players[]={
     {.id=9528,.name="祝枝山",.pass="123456",.life=100,.level=3,.exp=1,.hp=10000,.mp=5000,.mpMax=900000,.gold=10000000,.coord.x=2,.coord.y=0},
 };
 
-/*typedef struct _monster{
- 
- int id;
- char name[50];
- int level; //怪物级别
- int hp;//怪物生命值
- int att; //怪物攻击力
- int diff;//怪物防御
- int minMoney;//杀死怪物掉落最小金币
- int maxMoney;//杀死怪物玩家获得的经验值
- int exp;//杀死怪物玩家获得的道具列表
- int state;//怪物当前状态， 0 怪物死 1怪物活
- 
- Coord coord; //怪物当前所在地图坐标
- 
- }Monster;*/
+
+/*门派*/
+
+
+//int id;
+//char name[50];
+//char type;//门派类型
+//Coord coord;//总舵的坐标
+//int isOpen;//门派是否开放
+//char desc[1000];//门派描述
+Martial martials[]={
+    {.id=1,.name="少林派",.type="正派",.coord.x=1,.coord.y=4,.isOpen=1,.desc="武学泰斗，少林正宗"},
+    {.id=2,.name="武当派",.type="正派",.coord.x=3,.coord.y=4,.isOpen=1,.desc="与少林齐名"}
+   
+};
 
 
 Monster Monsters[]={
     
-    {.id=1,.name="海绵宝宝",.level=1,.hp=100,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
-    {.id=2,.name="凤姐",.level=2,.hp=200,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=1,.coord.y=0},
-    {.id=3,.name="罗永浩",.level=4,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
-    {.id=4,.name="习大大",.level=9,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
-    {.id=5,.name="老夫子",.level=4,.hp=1,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0}
+    {.id=1,.name="海绵宝宝",.level=1,.hp=20,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=2,.name="凤姐",.level=2,.hp=20,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=1,.coord.y=0},
+    {.id=3,.name="罗永浩",.level=4,.hp=10,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=4,.name="习大大",.level=9,.hp=10,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0},
+    {.id=5,.name="老夫子",.level=4,.hp=10,.att=5,.diff=2,.minMoney=5,.maxMoney=10,.exp=5,.state=1,.coord.x=0,.coord.y=0}
     
     
 };
@@ -118,6 +117,9 @@ void Init(){//初始化游戏数据
     currentPlayer->weapon=propArrary[0];
     
     currentPlayer->armor=propArrary[1];
+    
+    currentPlayer->martial=martials[0];
+    
     
     
 };
@@ -300,6 +302,8 @@ void ShowInformation(){
 /*显示游戏主菜单*/
 void ShowMianMenu(){
     
+ 
+    
     int i;
     
     
@@ -338,7 +342,7 @@ void ShowMianMenu(){
     }
     
     
-    int margin_down=3; //命令行距离底部距离
+    int margin_down=4; //命令行距离底部距离
     
     
     SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+i-margin_down);
@@ -657,7 +661,8 @@ void ProcessGameMenu(int keynumn){
         case 50:   //游戏菜单2
             ShowMosters();
             break;
-        case 51:   //游戏菜单3
+        case 51:   //游戏菜单3 瞬间移动
+            Move(currentPlayer->martial.coord.x,currentPlayer->martial.coord.y);
             
             break;
         case 52:   //游戏菜单4
@@ -781,7 +786,7 @@ void ShowMosters(){
             
             
             SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+INFORMATION_HEIGHT-2);
-      
+            
             printf("\033[K");
             
             SetPosition(MARGIN_X+WIDTH-1, MAP_END_LINE+INFORMATION_HEIGHT-2);
@@ -798,7 +803,7 @@ void ShowMosters(){
             
             SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+INFORMATION_HEIGHT-1);
             
-             keynum=key;
+            keynum=key;
             
             keynum=keynum-48;
             //printf("%d,%d\n",keynum,currentMapMonsterCount);
@@ -806,9 +811,61 @@ void ShowMosters(){
             
             if(keynum>=1&&keynum<currentMapMonsterCount+1){
                 
-                 SetTextColor("您选择了打->");
-               
+                SetTextColor("您选择了打->");
+                
+                
                 SetTextColorYellow((Monsters+currentMapMonsterIndexs[keynum-1])->name);
+                
+                //打怪，将怪物的状态设为0
+                // (->state=0;
+                FightMoster((Monsters+currentMapMonsterIndexs[keynum-1]));
+                
+                
+                //打怪后刷新信息窗
+                
+                
+                currentMapMonsterCount=0;
+                //1.清除信息窗消息
+                ClearContent(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
+                
+                for(i=0;i<monsterCount;i++){
+                    if((Monsters+i)->coord.x==x_pos&&(Monsters+i)->coord.y==y_pos&&(Monsters+i)->state!=0){  //查找当前地图活着的怪物
+                        currentMapMonsterIndexs[currentMapMonsterCount++]=i;
+                        if(currentMapMonsterCount==INFORMATION_HEIGHT-1)
+                            break;
+                        
+                        
+                    }
+                    
+                    
+                }
+                
+                if(currentMapMonsterCount<=0){
+                    SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
+                    SetTextColorBold("当前地图很和平，没有怪物！！");
+                }else{
+                    SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
+                    SetTextColorBold("当前地图怪物概况");
+                    for(int j=0;j<currentMapMonsterCount;j++){
+                        
+                        
+                        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+j+1);
+                        
+                        
+                        printf("\033[32m%d. \033[0m",j+1);
+                        
+                        SetTextColorYellow((Monsters+currentMapMonsterIndexs[j])->name);
+                        
+                        SetPosition(MARGIN_X+18, MAP_END_LINE+j+1);
+                        printf("\033[32m(怪物级别:%s)\033[0m",* (levelNames+((Monsters+currentMapMonsterIndexs[j])->level)-1));
+                        
+                    }
+                    
+                    
+                }
+                
+                
+                
             }
             else if(keynum==0){
                 SetTextColor("您选择了->");
@@ -820,35 +877,38 @@ void ShowMosters(){
             }else{
                 
                 SetTextColor("您输入的怪物编号不存在哟～");
-               
+                
             }
             
-          
+            
             
             
             
         }
         
-     
         
-    
+        
+        
         
         
         //让玩家选择要pk的怪物编号，调用Fight函数
-   
+        
         
     }
     
-
+    
     
 }
 
 
 /* 退出打怪*/
 void QuitFight(){
+    ClearLine(MARGIN_X,INFO_END_LINE,MAIN_MENU_HEIGHT);
+    
     ShowMapInfo();
-  int i;
-   for (i=0; i<MAIN_MENU_HEIGHT-2; i++) {
+    
+    int i;
+    for (i=0; i<MAIN_MENU_HEIGHT-3; i++) {
         
         SetPosition(MARGIN_X, INFO_END_LINE+i);
         SetTextColor("|");
@@ -875,17 +935,17 @@ void QuitFight(){
         }
         SetPosition(MARGIN_X+WIDTH-1, INFO_END_LINE+i);
         SetTextColor("|");
-       
-       
+        
+        
         
     }
-
-        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+i-2);
-   
-        SetTextColorBold("请在这里输入您的命令:");
     
-        SetPosition(MARGIN_X, INFO_END_LINE+i);
-        SetTextColor(SEP);
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+i-2);
+    
+    SetTextColorBold("请在这里输入您的命令:");
+    
+    SetPosition(MARGIN_X, INFO_END_LINE+i);
+    SetTextColor(SEP);
     
 }
 
@@ -897,10 +957,213 @@ void HideMainMenu(){
 /*打怪*/
 void FightMoster(Monster *moster){
     
+    
+    
+    
+    srand(time(NULL));
+    
+    int count=0;
+    //玩家和怪物互相PK
+    int player_attack;
+    int player_defence;
+    
+   
+    
+    ShowBattlefield();
+    
+    SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, INFO_END_LINE);
+    SetTextColorYellowBold(currentPlayer->name);
+    SetTextColorRedBold("  PK  ");
+    SetTextColorYellowBold(moster->name);
+    
+    
+    
+    while(1){
+        count ++;
+        
+        
+        
+        
+        
+        player_attack=(rand()%(currentPlayer->weapon.maxAttack-currentPlayer->weapon.minAttack+1))+currentPlayer->weapon.minAttack;
+        
+        player_defence=(rand()%(currentPlayer->armor.maxDefence-currentPlayer->armor.minDefence+1))+currentPlayer->armor.minDefence+1;
+        
+        
+        
+        
+     
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+3);
+        SetTextColor("大侠大名:");  SetTextColorYellow(currentPlayer->name);
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+4);
+        SetTextColor("级别:");  SetIntColorYellow(currentPlayer->level);
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+5);
+        SetTextColor("血量:");  SetIntColorYellow(currentPlayer->hp);printf("      ");
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+6);
+        SetTextColor("攻击力:");  SetIntColorYellow(player_attack);
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+7);
+        SetTextColor("防御力:");  SetIntColorYellow(player_defence);
+        
+        
+        SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+3);
+        SetTextColor("怪物称号:");  SetTextColorYellow(moster->name);
+        SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+4);
+        SetTextColor("级别:");  SetIntColorYellow(moster->level);
+        SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+5);
+        SetTextColor("血量:");  SetIntColorYellow(moster->hp);printf("      ");
+        SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+6);
+        SetTextColor("攻击力:");  SetIntColorYellow(moster->att);
+        SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+7);
+        SetTextColor("防御力:");  SetIntColorYellow(moster->diff);
+        
+        
+        moster->hp-=player_attack;
+        //怪物血量没了，退出pk；
+        if(moster->hp<=0){
+           
+            
+            break;
+        }
+        currentPlayer->hp-=moster->att;
+        //玩家血量没了，退出pk；
+        if(currentPlayer->hp<=0){
+            
+            break;
+        }
+        
+        
+
+        
+        
+        
+        
+     
+        
+        
+        
+        
+        
+        
+        //printf("done");
+        MyDelay(1);
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+4, INFO_END_LINE+1);
+        
+        SetTextColor("第");
+        SetIntColorYellow(count);
+        SetTextColor("回合");
+        
+       
+        printf("%s\n","  ");
+      
+        
+        
+        
+    }
+    
+   
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, 32);
+    
+    //printf("%d怪物%s血量剩余：%d,王家血量剩余%d;",count,moster->name,moster->hp,currentPlayer->hp);
+    
+    if(currentPlayer->hp<=0){
+        currentPlayer->hp=0;
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+5);
+        SetTextColor("血量:");  SetIntColorYellow(currentPlayer->hp);
+        
+        
+      
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+9);
+        
+        printf("玩家死亡");
+        
+    }
+    else if(moster->hp<=0){
+      
+        moster->state=0;
+        moster->hp=0;
+        
+        SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+5);
+        SetTextColor("血量:");   SetIntColorYellow(moster->hp); printf("      ");
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+9);
+        
+         SetTextColorRedBold(moster->name);
+        
+         SetTextColor("在战斗中死亡");
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+10);
+        
+        SetTextColor("大侠");SetTextColorYellow(currentPlayer->name);SetTextColor("获胜");
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+11);
+        
+        int gold=(rand()%(moster->maxMoney-moster->minMoney+1))+moster->minMoney;
+        
+        SetTextColor("得到金币:"); SetIntColorYellow(gold); SetTextColor("    经验值:"); SetIntColorYellow(moster->exp);
+        
+        currentPlayer->exp+=moster->exp;
+        
+        currentPlayer->gold+=gold;
+        
+    }
+    
+    
+    
+    
 }
 
 
 
+
+
+void MyDelay(int delaytime){
+    time_t current_time;
+    time_t start_time;
+    
+    
+    
+    time(&start_time);
+    
+    do {
+        time(&current_time);
+    } while ((current_time - start_time) < delaytime);
+    
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, 32);
+}
+
+
+/*瞬间移动*/
+void Move(int x,int y){
+    x_pos=x;
+    y_pos=y;
+    
+    ShowMapRefresh();
+}
+
+/*展示战场*/
+void ShowBattlefield(){
+    int i;
+    for (i=0; i<BATTLT_FIELD; i++) {
+        
+        SetPosition(MARGIN_X, INFO_END_LINE+i);
+        SetTextColor("|");
+
+        SetPosition(MARGIN_X+WIDTH-1, INFO_END_LINE+i);
+        SetTextColor("|");
+        
+        
+        
+    }
+    
+    SetPosition(MARGIN_X, INFO_END_LINE+i);
+    SetTextColor(SEP);
+}
 
 
 

@@ -10,6 +10,7 @@
 		3578E7C21F000004006962FB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 3578E7C11F000004006962FB /* main.c */; };
 		3578E7CC1F000A74006962FB /* Game.c in Sources */ = {isa = PBXBuildFile; fileRef = 3578E7CB1F000A74006962FB /* Game.c */; };
 		3578E7D11F00A330006962FB /* GameLib.c in Sources */ = {isa = PBXBuildFile; fileRef = 3578E7D01F00A330006962FB /* GameLib.c */; };
+		35F2A2A41F063771005EFB8C /* CharPicture.c in Sources */ = {isa = PBXBuildFile; fileRef = 35F2A2A21F063771005EFB8C /* CharPicture.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,8 @@
 		3578E7CB1F000A74006962FB /* Game.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Game.c; sourceTree = "<group>"; };
 		3578E7D01F00A330006962FB /* GameLib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GameLib.c; sourceTree = "<group>"; };
 		3578E7D21F00D2D8006962FB /* GameLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameLib.h; path = XiaoAoJianghu/GameLib.h; sourceTree = "<group>"; };
+		35F2A2A21F063771005EFB8C /* CharPicture.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CharPicture.c; sourceTree = "<group>"; };
+		35F2A2A31F063771005EFB8C /* CharPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharPicture.h; path = XiaoAoJianghu/CharPicture.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,7 @@
 				3578E7C11F000004006962FB /* main.c */,
 				3578E7CB1F000A74006962FB /* Game.c */,
 				3578E7D01F00A330006962FB /* GameLib.c */,
+				35F2A2A21F063771005EFB8C /* CharPicture.c */,
 			);
 			path = XiaoAoJianghu;
 			sourceTree = "<group>";
@@ -74,6 +78,7 @@
 		3578E7CA1F00097B006962FB /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				35F2A2A31F063771005EFB8C /* CharPicture.h */,
 				3578E7C81F0003E8006962FB /* Game.h */,
 				3578E7D21F00D2D8006962FB /* GameLib.h */,
 			);
@@ -137,6 +142,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35F2A2A41F063771005EFB8C /* CharPicture.c in Sources */,
 				3578E7C21F000004006962FB /* main.c in Sources */,
 				3578E7CC1F000A74006962FB /* Game.c in Sources */,
 				3578E7D11F00A330006962FB /* GameLib.c in Sources */,
@@ -268,6 +274,7 @@
 				3578E7C71F000004006962FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

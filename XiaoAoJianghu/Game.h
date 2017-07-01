@@ -20,12 +20,20 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <time.h>
+
+#include <unistd.h>
+
+
+
 
 
 #define SEP  "------------------------------------------------------------------------------\n"
 
 //界面宽度
 #define WIDTH 78
+
+#define HALF_WIDTH 39
 
 //界面边距
 #define MARGIN_X 15
@@ -36,6 +44,8 @@
 #define TITLE_MARGIN_LEFT 27
 
 #define WORLD_MARGIN_LEFT 4
+
+#define BATTLT_FIELD 17
 
 
 //从第几行可是界面显示
@@ -124,6 +134,21 @@ typedef struct _prop {
 }Prop;
 
 
+/*定义门派*/
+
+typedef struct _martial{
+    int id;
+    char name[50];
+    char type[30];//门派类型
+    Coord coord;//总舵的坐标
+    int isOpen;//门派是否开放
+    char desc[1000];//门派描述
+    
+    
+    
+}Martial;
+
+
 /*定义玩家对象*/
 
 typedef struct _player{
@@ -142,7 +167,7 @@ typedef struct _player{
     Prop armor;//玩家防具
     Coord coord; //玩家当前所在地图坐标
     
-    //门派
+    Martial martial;//门派
     //背包
     
 }Player;
@@ -211,7 +236,12 @@ void QuitFight();
 /*打怪*/
 void FightMoster(Monster *moster);
 
-
+/*延时函数*/
+void MyDelay(int delaytime);
+/*瞬间移动*/
+void Move(int x,int y);
+/*展示战场*/
+void ShowBattlefield();
 
 
 #endif /* Game_h */
