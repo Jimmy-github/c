@@ -11,6 +11,6 @@
 
 #include <stdio.h>
 
-
+void CreateBeer();
 void CreateCat();
 #endif /* CharPicture_h */

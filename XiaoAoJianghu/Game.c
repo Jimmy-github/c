@@ -12,6 +12,8 @@
 
 #include "GameLib.h"
 
+#include "CharPicture.h"
+
 extern  int x_pos,y_pos;
 
 /*根据不同等级别对于玩家攻击力、防御力、内力、血量*/
@@ -54,22 +56,22 @@ Prop propArrary[]={
     {.id=1,.name="帝皇天烈剑1",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
     {.id=2,.name="荆棘之甲1",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
     {.id=3,.name="玉液琼浆1",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
-   
+    
     {.id=1,.name="帝皇天烈剑2",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
     {.id=2,.name="荆棘之甲2",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
-       {.id=3,.name="玉液琼浆2",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
+    {.id=3,.name="玉液琼浆2",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
     
     {.id=1,.name="帝皇天烈剑3",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
     {.id=2,.name="荆棘之甲3",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
-     {.id=3,.name="玉液琼浆3",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
+    {.id=3,.name="玉液琼浆3",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
     
     {.id=1,.name="帝皇天烈剑4",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
     {.id=2,.name="荆棘之甲4",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
-      {.id=3,.name="玉液琼浆4",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
+    {.id=3,.name="玉液琼浆4",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
     
     {.id=1,.name="帝皇天烈剑5",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
     {.id=2,.name="荆棘之甲5",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
-       {.id=3,.name="玉液琼浆5",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
+    {.id=3,.name="玉液琼浆5",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
     
 };
 
@@ -725,7 +727,7 @@ void ProcessGameMenu(int keynumn){
             SaveLife();
             break;
         case 54:   //游戏菜单6 彩蛋
-            
+            ShowEasterEgg();
             break;
             
             
@@ -1526,7 +1528,7 @@ void ShowPropStore(){
             }else {
                 SetTextColor("您的金币不够～请选择其他武器");
             }
-           
+            
         }
         else if(keynum==0){
             SetTextColor("您选择了->");
@@ -1656,13 +1658,13 @@ void SaveLife(){
             
             
             
-          
-                
-                SetTextColorYellow("药品");
             
-                SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+56, MAP_END_LINE+3+i);
-                printf("\033[33m血量提升%d-%d\033[0m",propArrary[props_index[i]].minPower,propArrary[props_index[i]].maxPower);
-           
+            
+            SetTextColorYellow("药品");
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+56, MAP_END_LINE+3+i);
+            printf("\033[33m血量提升%d-%d\033[0m",propArrary[props_index[i]].minPower,propArrary[props_index[i]].maxPower);
+            
             
             
             
@@ -1724,28 +1726,28 @@ void SaveLife(){
             
             
             if(currentPlayer->gold>=propArrary[props_index[keynum-1]].price){
-              
+                
                 
                 
                 currentPlayer->gold-=propArrary[props_index[keynum-1]].price;
                 
                 srand(time(NULL));
                 
-               int  add_hp=(rand()%(propArrary[props_index[keynum-1]].maxPower-propArrary[props_index[keynum-1]].minPower+1))+propArrary[props_index[keynum-1]].minPower;
+                int  add_hp=(rand()%(propArrary[props_index[keynum-1]].maxPower-propArrary[props_index[keynum-1]].minPower+1))+propArrary[props_index[keynum-1]].minPower;
                 
                 if((level_hp[currentPlayer->level-1]-currentPlayer->hp)>=add_hp){
                     currentPlayer->hp+=add_hp;
-                     SetTextColor("您的血量提升:");
-                     printf("\033[33m%d\033[0m",add_hp);
-                   
+                    SetTextColor("您的血量提升:");
+                    printf("\033[33m%d\033[0m",add_hp);
+                    
                 }else {
                     currentPlayer->hp=level_hp[currentPlayer->level-1];
                     SetTextColor("您的血量全部恢复，可以去战斗啦～");
-                   
+                    
                 }
                 
-                 propArrary[props_index[keynum-1]].stock--;
-              
+                propArrary[props_index[keynum-1]].stock--;
+                
                 
             }else {
                 SetTextColor("您的金币不够～请选择其他药品");
@@ -1770,11 +1772,72 @@ void SaveLife(){
         
         
     }
-
+    
     
     
     
 }
+
+
+/*显示彩蛋*/
+void ShowEasterEgg(){
+    //清除无用行
+     ClearLine(MARGIN_X,START_LINE-1,MAP_END_LINE+MAIN_MENU_HEIGHT+3);
+    
+    EASTER_EGG_CURSOR=1;
+    while(EASTER_EGG_CURSOR){
+        
+         CreateBeer();
+        
+        char mylove[]="Happy birthday although a bit late~";
+        
+        int len=sizeof(mylove)/sizeof(char);
+        
+        SetPosition(15+len, START_LINE+1);
+        
+        printf("\033[K");
+        
+      key= getInputKey();
+        
+        SetPosition(15, START_LINE+1);
+        printf("\033[K");
+        
+        keynum=key;
+        
+       keynum=keynum-48;
+        
+        if(keynum==0){
+            EASTER_EGG_CURSOR=0;
+              ClearLine(MARGIN_X,START_LINE-1,MAP_END_LINE+MAIN_MENU_HEIGHT+3);
+            
+            ShowWelcome("欢迎来到笑傲江湖世界!!!\n");
+            ShowMap();
+            ShowInformation();
+            ShowMainMenu();
+            
+        }
+        
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

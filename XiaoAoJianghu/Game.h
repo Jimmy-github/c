@@ -67,6 +67,8 @@ static int MAPINFO_GET_CURSOR=1;
 //武器商店获得光标
 static int PROP_STORE_GET_CURSOR=1;
 
+//彩蛋获得光标
+static int EASTER_EGG_CURSOR=1;
 
 
 char *input;

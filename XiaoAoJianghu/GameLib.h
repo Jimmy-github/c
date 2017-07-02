@@ -42,8 +42,8 @@ void SetTextColorWithBackground(char *text);
 /*设定光标位置*/
 void SetPosition(int x,int y);
 
-
-
+/*显示彩蛋*/
+void ShowEasterEgg();
 
 
 

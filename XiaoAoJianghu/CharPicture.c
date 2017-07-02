@@ -7,7 +7,54 @@
 //
 
 #include "CharPicture.h"
+#include "GameLib.h"
+#include "Game.h"
 
+
+
+extern int START_LINE;
+
+int CETTER=45;
+
+
+char mylove[]="Happy birthday although a bit late~";
+
+void CreateBeer(){
+    
+    
+    
+    int i=6;
+    
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("  ((`'-'``''-'`))");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("   )  -     -  (");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("  ／  (o _ o)   \\");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("  \\    ( 0 )    /");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("  _'-.._'='_..-'_");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("/`;#'#'#.-.#'#'#;`\\");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("\\_))    '#'    ((_/");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("  #.   ☆ ☆ ☆   .#");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("  '#.  我爱你!.#'");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow(" / '#.      .#' \\");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow(" _\\  \\'#. .#'/  /_");
+    SetPosition(CETTER, START_LINE+i++); SetTextColorYellow("(((___) '#' (___)))");
+    
+    
+    
+   // SetPosition(5, START_LINE);
+    for (int j=0;j<sizeof(mylove)/sizeof(char);j++) {
+        
+           //printf("\033[5m%c\033[0m",mylove[j]);
+         SetPosition(15+j, START_LINE+1);
+         printf("%c",mylove[j]);
+        usleep(100000);
+        //MyDelay(1);
+        
+        
+         printf("%s\n","  ");
+    }
+    
+                                  
+}
 
 void CreateCat(){
     printf("###+++++++''''+++#########################;:;:;;'+'+########\n");
