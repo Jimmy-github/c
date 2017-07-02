@@ -30,8 +30,8 @@ int level_mp_add[]={1,2,3,4,5,6,7,8,9};
 
 
 Player Players[]={
-    {.id=9527,.name="唐伯虎",.pass="123456",.level=1,.exp=0,.hp=80,.mp=1,.gold=0,.att=1,.diff=1,.coord.x=3,.coord.y=1},
-    {.id=9528,.name="祝枝山",.pass="123456",.level=1,.exp=0,.hp=80,.mp=1,.gold=0,.att=1,.diff=1,.coord.x=2,.coord.y=0},
+    {.id=9527,.name="唐伯虎",.pass="123456",.level=1,.exp=0,.hp=80,.mp=1,.gold=51,.att=1,.diff=1,.coord.x=3,.coord.y=1},
+    {.id=9528,.name="祝枝山",.pass="123456",.level=1,.exp=0,.hp=100,.mp=1,.gold=0,.att=1,.diff=1,.coord.x=2,.coord.y=0},
 };
 
 Monster Monsters[]={
@@ -51,10 +51,26 @@ Monster Monsters[]={
 
 
 Prop propArrary[]={
-    {.id=1,.name="帝皇天烈剑",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
-    {.id=2,.name="荆棘之甲",.level=1,.stock=5,.price=50,.type=Armor,.minAttack=1,.maxAttack=2,.desc="取日月之精华，反弹厉害"},
-    {.id=3,.name="玉液琼浆",.level=1,.stock=5,.price=50,.type=Con,.minAttack=1,.maxAttack=4,.desc="蟠桃会上御用饮品"}
-  
+    {.id=1,.name="帝皇天烈剑1",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
+    {.id=2,.name="荆棘之甲1",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
+    {.id=3,.name="玉液琼浆1",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
+   
+    {.id=1,.name="帝皇天烈剑2",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
+    {.id=2,.name="荆棘之甲2",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
+       {.id=3,.name="玉液琼浆2",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
+    
+    {.id=1,.name="帝皇天烈剑3",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
+    {.id=2,.name="荆棘之甲3",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
+     {.id=3,.name="玉液琼浆3",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
+    
+    {.id=1,.name="帝皇天烈剑4",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
+    {.id=2,.name="荆棘之甲4",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
+      {.id=3,.name="玉液琼浆4",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
+    
+    {.id=1,.name="帝皇天烈剑5",.level=1,.stock=5,.price=50,.type=Weapon,.minAttack=1,.maxAttack=3,.desc="上古三皇五帝用过的剑"},
+    {.id=2,.name="荆棘之甲5",.level=1,.stock=5,.price=50,.type=Armor,.minDefence=1,.maxDefence=2,.desc="取日月之精华，反弹厉害"},
+       {.id=3,.name="玉液琼浆5",.level=1,.stock=5,.price=50,.type=Con,.minPower=20,.maxPower=25,.desc="蟠桃会上御用饮品"},
+    
 };
 
 
@@ -154,7 +170,7 @@ void Show(){//显示全局数据
     
     int propCount=sizeof(propArrary)/sizeof(Prop);
     for (int i=0; i<propCount; i++) {
-        printf("%d\t%s\t%.0lf\t\n",propArrary[i].id,propArrary[i].name,propArrary[i].price);
+        printf("%d\t%s\t%d\t\n",propArrary[i].id,propArrary[i].name,propArrary[i].price);
         
         switch (propArrary[i].type) {
             case Weapon:
@@ -327,7 +343,7 @@ void ShowInformation(){
     INFO_END_LINE=MAP_END_LINE+1+i;
 }
 /*显示游戏主菜单*/
-void ShowMianMenu(){
+void ShowMainMenu(){
     
     
     
@@ -702,10 +718,11 @@ void ProcessGameMenu(int keynumn){
             
             break;
         case 52:   //游戏菜单4 购买装备
+            BuyProp();
             
             break;
         case 53:   //游戏菜单5 紧急治疗
-            
+            SaveLife();
             break;
         case 54:   //游戏菜单6 彩蛋
             
@@ -740,14 +757,15 @@ void ShowPlayerInfo(){
     SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+2);
     SetTextColor("等级: ");
     
-     printf("\033[33m%d (%s)\033[0m",currentPlayer->level,*(levelNames+(currentPlayer->level-1)));
+    printf("\033[33m%d (%s)\033[0m",currentPlayer->level,*(levelNames+(currentPlayer->level-1)));
     
     
     
     
     SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+3);
     SetTextColor("血量:");
-    SetIntColorYellow(currentPlayer->hp);
+    
+    printf("\033[33m(%d/%d)\033[0m",currentPlayer->hp,level_hp[currentPlayer->level-1]);
     SetPosition(MARGIN_X+24, MAP_END_LINE+3);
     SetTextColor("经验值:");
     SetIntColorYellow(currentPlayer->exp);
@@ -785,7 +803,7 @@ void ShowPlayerInfo(){
 
 /*在信息界面显示 当前地图怪物资料*/
 void ShowMosters(){
- 
+    
     
     
     //1.清除信息窗消息
@@ -844,7 +862,7 @@ void ShowMosters(){
         //将光标定位到信息框，让用户输入打怪编号
         while(MAPINFO_GET_CURSOR){
             
-          
+            
             
             
             SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+INFORMATION_HEIGHT-2);
@@ -885,62 +903,62 @@ void ShowMosters(){
                 }
                 else{
                     
-               
-                
-                
-                SetTextColor("您选择了打->");
-                
-                
-                SetTextColorYellow((Monsters+currentMapMonsterIndexs[keynum-1])->name);
-                
-                //打怪，将怪物的状态设为0
-                // (->state=0;
-                FightMoster((Monsters+currentMapMonsterIndexs[keynum-1]));
-                
-                
-                //打怪后刷新信息窗
-                
-                
-                currentMapMonsterCount=0;
-                //1.清除信息窗消息
-                ClearContent(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
-                
-                for(i=0;i<monsterCount;i++){
-                    if((Monsters+i)->coord.x==x_pos&&(Monsters+i)->coord.y==y_pos&&(Monsters+i)->state!=0){  //查找当前地图活着的怪物
-                        currentMapMonsterIndexs[currentMapMonsterCount++]=i;
-                        if(currentMapMonsterCount==INFORMATION_HEIGHT-1)
-                            break;
+                    
+                    
+                    
+                    SetTextColor("您选择了打->");
+                    
+                    
+                    SetTextColorYellow((Monsters+currentMapMonsterIndexs[keynum-1])->name);
+                    
+                    //打怪，将怪物的状态设为0
+                    // (->state=0;
+                    FightMoster((Monsters+currentMapMonsterIndexs[keynum-1]));
+                    
+                    
+                    //打怪后刷新信息窗
+                    
+                    
+                    currentMapMonsterCount=0;
+                    //1.清除信息窗消息
+                    ClearContent(MARGIN_X+1,MAP_END_LINE,INFORMATION_HEIGHT);
+                    
+                    for(i=0;i<monsterCount;i++){
+                        if((Monsters+i)->coord.x==x_pos&&(Monsters+i)->coord.y==y_pos&&(Monsters+i)->state!=0){  //查找当前地图活着的怪物
+                            currentMapMonsterIndexs[currentMapMonsterCount++]=i;
+                            if(currentMapMonsterCount==INFORMATION_HEIGHT-1)
+                                break;
+                            
+                            
+                        }
                         
                         
                     }
                     
-                    
-                }
-                
-                if(currentMapMonsterCount<=0){
-                    SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
-                    SetTextColorBold("当前地图很和平，没有怪物！！");
-                }else{
-                    SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
-                    SetTextColorBold("当前地图怪物概况");
-                    for(int j=0;j<currentMapMonsterCount;j++){
+                    if(currentMapMonsterCount<=0){
+                        SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
+                        SetTextColorBold("当前地图很和平，没有怪物！！");
+                    }else{
+                        SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
+                        SetTextColorBold("当前地图怪物概况");
+                        for(int j=0;j<currentMapMonsterCount;j++){
+                            
+                            
+                            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+j+1);
+                            
+                            
+                            printf("\033[32m%d. \033[0m",j+1);
+                            
+                            SetTextColorYellow((Monsters+currentMapMonsterIndexs[j])->name);
+                            
+                            SetPosition(MARGIN_X+18, MAP_END_LINE+j+1);
+                            printf("\033[32m(怪物级别:%s)\033[0m",* (levelNames+((Monsters+currentMapMonsterIndexs[j])->level)-1));
+                            
+                        }
                         
-                        
-                        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+j+1);
-                        
-                        
-                        printf("\033[32m%d. \033[0m",j+1);
-                        
-                        SetTextColorYellow((Monsters+currentMapMonsterIndexs[j])->name);
-                        
-                        SetPosition(MARGIN_X+18, MAP_END_LINE+j+1);
-                        printf("\033[32m(怪物级别:%s)\033[0m",* (levelNames+((Monsters+currentMapMonsterIndexs[j])->level)-1));
                         
                     }
                     
-                    
-                }
-                
                 }
                 
             }
@@ -983,6 +1001,9 @@ void QuitFight(){
     ClearLine(MARGIN_X,INFO_END_LINE,MAIN_MENU_HEIGHT);
     
     ShowMapInfo();
+    
+    SetPosition(MARGIN_X, INFO_END_LINE-1);
+    SetTextColor(SEP);
     
     int i;
     for (i=0; i<MAIN_MENU_HEIGHT-3; i++) {
@@ -1092,7 +1113,7 @@ void FightMoster(Monster *moster){
         SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+4);
         SetTextColor("级别:");  SetIntColorYellow(currentPlayer->level);
         SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+5);
-        SetTextColor("血量:");  SetIntColorYellow(currentPlayer->hp);printf("      ");
+        SetTextColor("血量:");  printf("\033[33m(%d/%d)\033[0m",currentPlayer->hp,level_hp[currentPlayer->level-1]);printf("      ");
         SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+6);
         SetTextColor("攻击力:");  SetIntColorYellow(currentPlayer->att);
         SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+7);
@@ -1105,6 +1126,7 @@ void FightMoster(Monster *moster){
         SetTextColor("怪物称号:");  SetTextColorYellow(moster->name);
         SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+4);
         SetTextColor("级别:");  SetIntColorYellow(moster->level);
+        
         SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+5);
         SetTextColor("血量:");  SetIntColorYellow(moster->hp);printf("      ");
         SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+6);
@@ -1113,7 +1135,7 @@ void FightMoster(Monster *moster){
         SetTextColor("防御力:");  SetIntColorYellow(moster->diff);
         SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+8);
         SetTextColor("本轮有效伤害:");  SetIntColorYellow(moster_hurt);
-      
+        
         
         moster->hp-=player_hurt;
         //怪物血量没了，退出pk；
@@ -1123,26 +1145,14 @@ void FightMoster(Monster *moster){
             break;
         }
         
-     
-      
+        
+        
         currentPlayer->hp-=moster_hurt;
         //玩家血量没了，退出pk；
         if(currentPlayer->hp<=0){
             
             break;
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         //printf("done");
@@ -1172,7 +1182,7 @@ void FightMoster(Monster *moster){
         currentPlayer->hp=0;
         
         SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+5);
-        SetTextColor("血量:");  SetIntColorYellow(currentPlayer->hp); printf("      ");
+        SetTextColor("血量:");  printf("\033[33m(%d/%d)\033[0m",currentPlayer->hp,level_hp[currentPlayer->level-1]); printf("      ");
         
         
         
@@ -1190,7 +1200,7 @@ void FightMoster(Monster *moster){
         moster->hp=0;
         
         SetPosition(MARGIN_X+HALF_WIDTH, INFO_END_LINE+5);
-        SetTextColor("血量:");   SetIntColorYellow(moster->hp); printf("      ");
+        SetTextColor("血量:");  SetIntColorYellow(moster->hp);  printf("      ");
         
         
         SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, INFO_END_LINE+10);
@@ -1216,7 +1226,7 @@ void FightMoster(Monster *moster){
         currentPlayer->mp+=moster->mp;
         
         int pre_level=currentPlayer->level;
-       
+        
         int i;
         for ( i=0; i<sizeof(level_exp)/sizeof(int); i++) {
             if(currentPlayer->exp<level_exp[i]){
@@ -1257,11 +1267,11 @@ void FightMoster(Monster *moster){
             }
             
             
-     
-           
+            
+            
         }
         
-  
+        
     }
     
     
@@ -1315,6 +1325,455 @@ void ShowBattlefield(){
     
     SetPosition(MARGIN_X, INFO_END_LINE+i);
     SetTextColor(SEP);
+}
+
+/*买装备*/
+void BuyProp(){
+    
+    ShowPropStore();
+}
+
+/*显示装备商店*/
+void ShowPropStore(){
+    
+    //清除无用行
+    
+    
+    
+    ClearLine(MARGIN_X,MAP_END_LINE,MAIN_MENU_HEIGHT+INFORMATION_HEIGHT);
+    
+    //创建装备商店
+    
+    
+    
+    int i;
+    for (i=0; i<STORE_FIELD; i++) {
+        
+        SetPosition(MARGIN_X, MAP_END_LINE+i);
+        SetTextColor("|");
+        
+        SetPosition(MARGIN_X+WIDTH-1, MAP_END_LINE+i);
+        SetTextColor("|");
+        
+        
+        
+    }
+    
+    SetPosition(MARGIN_X, MAP_END_LINE+i);
+    SetTextColor(SEP);
+    
+    
+    
+    SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
+    SetTextColorBold("欢迎来到武器库，请选购您心仪的武器");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+2);
+    
+    SetTextColor("编号");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+6, MAP_END_LINE+2);
+    
+    SetTextColor("名称");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+20, MAP_END_LINE+2);
+    
+    SetTextColor("级别");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+28, MAP_END_LINE+2);
+    
+    SetTextColor("类型");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+38, MAP_END_LINE+2);
+    SetTextColor("金币");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+48, MAP_END_LINE+2);
+    SetTextColor("库存");
+    
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+56, MAP_END_LINE+2);
+    SetTextColor("作用");
+    
+    
+    
+    
+    
+    PROP_STORE_GET_CURSOR=1;
+    //将光标定位到信息框，让用户输入打怪编号
+    
+    
+    while(PROP_STORE_GET_CURSOR){
+        
+        int prop_num=sizeof(propArrary)/sizeof(Prop);
+        
+        int weapon_store_count=0;
+        int  props_index[9];
+        
+        
+        
+        for(int i=0;i<prop_num;i++){
+            
+            if(propArrary[i].type==Weapon||propArrary[i].type==Armor){
+                
+                
+                
+                
+                props_index[weapon_store_count++]=i;
+                
+                if(weapon_store_count==9){
+                    break;
+                }
+                
+                
+            }
+        }
+        
+        for(int i=0;i<weapon_store_count;i++){
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+3+i);
+            SetIntColorYellow(i+1);
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+28, MAP_END_LINE+3+i);
+            
+            
+            
+            if(propArrary[props_index[i]].type==Weapon){
+                
+                
+                SetTextColorYellow("武器");
+                
+                SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+56, MAP_END_LINE+3+i);
+                printf("\033[33m攻击提升%d-%d\033[0m",propArrary[props_index[i]].minAttack,propArrary[props_index[i]].maxAttack);
+                
+            }else if(propArrary[props_index[i]].type==Armor){
+                
+                
+                SetTextColorYellow("防具");
+                SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+56, MAP_END_LINE+3+i);
+                printf("\033[33m防御提升%d-%d\033[0m",propArrary[props_index[i]].minDefence,propArrary[props_index[i]].maxDefence);
+                
+            }
+            
+            
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+6, MAP_END_LINE+3+i);
+            
+            SetTextColorYellow(propArrary[props_index[i]].name);
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+20, MAP_END_LINE+3+i);
+            
+            SetIntColorYellow(propArrary[props_index[i]].level);
+            
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+38, MAP_END_LINE+3+i);
+            SetIntColorYellow(propArrary[props_index[i]].price);
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+48, MAP_END_LINE+3+i);
+            SetIntColorYellow(propArrary[props_index[i]].stock);
+            
+        }
+        
+        
+        
+        
+        
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+STORE_FIELD-2);
+        
+        printf("\033[K");
+        
+        SetPosition(MARGIN_X+WIDTH-1, MAP_END_LINE+STORE_FIELD-2);
+        SetTextColor("|");
+        
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+STORE_FIELD-2);
+        SetTextColorBold("请输入要购买的武器编号(按0返回):");
+        
+        
+        key= getInputKey();
+        
+        
+        
+        
+        
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+STORE_FIELD-1);
+        printf("\033[K");
+        
+        SetPosition(MARGIN_X+WIDTH-1, MAP_END_LINE+STORE_FIELD-1);
+        SetTextColor("|");
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+STORE_FIELD-1);
+        
+        keynum=key;
+        
+        keynum=keynum-48;
+        
+        if(keynum>=1&&keynum<weapon_store_count+1){
+            
+            if(currentPlayer->gold>=propArrary[props_index[keynum-1]].price){
+                if(propArrary[props_index[keynum-1]].type==Weapon){
+                    
+                    currentPlayer->weapon=propArrary[props_index[keynum-1]];
+                    
+                }else if(propArrary[props_index[keynum-1]].type==Armor){
+                    currentPlayer->armor=propArrary[props_index[keynum-1]];
+                }
+                currentPlayer->gold-=propArrary[props_index[keynum-1]].price;
+                SetTextColor("您购买的武器已经装备好了,可退出查看,感谢光临");
+                
+                propArrary[props_index[keynum-1]].stock--;
+                
+            }else {
+                SetTextColor("您的金币不够～请选择其他武器");
+            }
+           
+        }
+        else if(keynum==0){
+            SetTextColor("您选择了->");
+            SetTextColorPurple("退出");
+            
+            PROP_STORE_GET_CURSOR=0;
+            
+            QuitFight();
+            
+            
+        }else{
+            
+            SetTextColor("您输入的武器编号不存在哟～");
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+}
+
+/*紧急治疗*/
+
+void SaveLife(){
+    
+    //清除无用行
+    
+    
+    
+    ClearLine(MARGIN_X,MAP_END_LINE,MAIN_MENU_HEIGHT+INFORMATION_HEIGHT);
+    
+    //创建装备商店
+    
+    
+    
+    int i;
+    for (i=0; i<STORE_FIELD; i++) {
+        
+        SetPosition(MARGIN_X, MAP_END_LINE+i);
+        SetTextColor("|");
+        
+        SetPosition(MARGIN_X+WIDTH-1, MAP_END_LINE+i);
+        SetTextColor("|");
+        
+        
+        
+    }
+    
+    SetPosition(MARGIN_X, MAP_END_LINE+i);
+    SetTextColor(SEP);
+    
+    
+    
+    SetPosition(MARGIN_X+TITLE_MARGIN_LEFT, MAP_END_LINE);
+    SetTextColorBold("欢迎来到治疗室，请选购您适合的药品");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+2);
+    
+    SetTextColor("编号");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+6, MAP_END_LINE+2);
+    
+    SetTextColor("名称");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+20, MAP_END_LINE+2);
+    
+    SetTextColor("级别");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+28, MAP_END_LINE+2);
+    
+    SetTextColor("类型");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+38, MAP_END_LINE+2);
+    SetTextColor("金币");
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+48, MAP_END_LINE+2);
+    SetTextColor("库存");
+    
+    
+    SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+56, MAP_END_LINE+2);
+    SetTextColor("作用");
+    
+    
+    
+    
+    
+    PROP_STORE_GET_CURSOR=1;
+    //将光标定位到信息框，让用户输入打怪编号
+    
+    
+    while(PROP_STORE_GET_CURSOR){
+        
+        int prop_num=sizeof(propArrary)/sizeof(Prop);
+        
+        int weapon_store_count=0;
+        int  props_index[9];
+        
+        
+        
+        for(int i=0;i<prop_num;i++){
+            
+            if(propArrary[i].type==Con){
+                
+                
+                
+                
+                props_index[weapon_store_count++]=i;
+                
+                if(weapon_store_count==9){
+                    break;
+                }
+                
+                
+            }
+        }
+        
+        for(int i=0;i<weapon_store_count;i++){
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+3+i);
+            SetIntColorYellow(i+1);
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+28, MAP_END_LINE+3+i);
+            
+            
+            
+          
+                
+                SetTextColorYellow("药品");
+            
+                SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+56, MAP_END_LINE+3+i);
+                printf("\033[33m血量提升%d-%d\033[0m",propArrary[props_index[i]].minPower,propArrary[props_index[i]].maxPower);
+           
+            
+            
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+6, MAP_END_LINE+3+i);
+            
+            SetTextColorYellow(propArrary[props_index[i]].name);
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+20, MAP_END_LINE+3+i);
+            
+            SetIntColorYellow(propArrary[props_index[i]].level);
+            
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+38, MAP_END_LINE+3+i);
+            SetIntColorYellow(propArrary[props_index[i]].price);
+            
+            SetPosition(MARGIN_X+WORLD_MARGIN_LEFT+48, MAP_END_LINE+3+i);
+            SetIntColorYellow(propArrary[props_index[i]].stock);
+            
+        }
+        
+        
+        
+        
+        
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+STORE_FIELD-2);
+        
+        printf("\033[K");
+        
+        SetPosition(MARGIN_X+WIDTH-1, MAP_END_LINE+STORE_FIELD-2);
+        SetTextColor("|");
+        
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+STORE_FIELD-2);
+        SetTextColorBold("请输入要购买的药品编号(按0返回):");
+        
+        
+        key= getInputKey();
+        
+        
+        
+        
+        
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+STORE_FIELD-1);
+        printf("\033[K");
+        
+        SetPosition(MARGIN_X+WIDTH-1, MAP_END_LINE+STORE_FIELD-1);
+        SetTextColor("|");
+        
+        SetPosition(MARGIN_X+WORLD_MARGIN_LEFT, MAP_END_LINE+STORE_FIELD-1);
+        
+        keynum=key;
+        
+        keynum=keynum-48;
+        
+        if(keynum>=1&&keynum<weapon_store_count+1){
+            
+            
+            
+            if(currentPlayer->gold>=propArrary[props_index[keynum-1]].price){
+              
+                
+                
+                currentPlayer->gold-=propArrary[props_index[keynum-1]].price;
+                
+                srand(time(NULL));
+                
+               int  add_hp=(rand()%(propArrary[props_index[keynum-1]].maxPower-propArrary[props_index[keynum-1]].minPower+1))+propArrary[props_index[keynum-1]].minPower;
+                
+                if((level_hp[currentPlayer->level-1]-currentPlayer->hp)>=add_hp){
+                    currentPlayer->hp+=add_hp;
+                     SetTextColor("您的血量提升:");
+                     printf("\033[33m%d\033[0m",add_hp);
+                   
+                }else {
+                    currentPlayer->hp=level_hp[currentPlayer->level-1];
+                    SetTextColor("您的血量全部恢复，可以去战斗啦～");
+                   
+                }
+                
+                 propArrary[props_index[keynum-1]].stock--;
+              
+                
+            }else {
+                SetTextColor("您的金币不够～请选择其他药品");
+            }
+            
+        }
+        else if(keynum==0){
+            SetTextColor("您选择了->");
+            SetTextColorPurple("退出");
+            
+            PROP_STORE_GET_CURSOR=0;
+            
+            QuitFight();
+            
+            
+        }else{
+            
+            SetTextColor("您输入的药品编号不存在哟～");
+            
+        }
+        
+        
+        
+    }
+
+    
+    
+    
 }
 
 

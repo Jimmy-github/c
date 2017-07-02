@@ -47,6 +47,8 @@
 
 #define BATTLT_FIELD 17
 
+#define STORE_FIELD 17
+
 
 //从第几行可是界面显示
 
@@ -61,6 +63,10 @@ static int MENU_END_LINE;
 
 //菜单窗口获得光标
 static int MAPINFO_GET_CURSOR=1;
+
+//武器商店获得光标
+static int PROP_STORE_GET_CURSOR=1;
+
 
 
 char *input;
@@ -112,7 +118,7 @@ typedef struct _prop {
     char name[50];//道具名称
     int level;//道具级别
     int stock;//道具库存或玩家背包中的叠加数量
-    double price;//道具价格
+    int price;//道具价格
     PropType type;//道具类型
     union{//联合  多选一
         int minAttack;//如果是武器，就对应攻击力
@@ -215,7 +221,7 @@ void ShowMapRefresh();
 void ShowInformation();
 /*显示游戏主菜单*/
 
-void ShowMianMenu();
+void ShowMainMenu();
 
 void HideMainMenu();
 
@@ -246,6 +252,14 @@ void MyDelay(int delaytime);
 void Move(int x,int y);
 /*展示战场*/
 void ShowBattlefield();
+/*买装备*/
+void BuyProp();
+/*显示装备商店*/
+void ShowPropStore();
+
+/*紧急治疗*/
+
+void SaveLife();
 
 
 #endif /* Game_h */
