@@ -70,6 +70,9 @@ static int PROP_STORE_GET_CURSOR=1;
 //彩蛋获得光标
 static int EASTER_EGG_CURSOR=1;
 
+//首页获得光标
+static int LAUNCHER_GET_CURSOR=1;
+
 
 char *input;
 
@@ -161,8 +164,8 @@ typedef struct _martial{
 
 typedef struct _player{
     int id;
-    char name[50];
-    char pass[50];
+    char name[100];
+    char pass[100];
     
     int level;//玩家级别
     int exp;//玩家经验值
@@ -262,6 +265,23 @@ void ShowPropStore();
 /*紧急治疗*/
 
 void SaveLife();
+
+
+/*显示彩蛋*/
+void ShowEasterEgg();
+
+/*首页*/
+
+void HomePage();
+
+
+/*登录*/
+
+void Login();
+
+
+/*注册*/
+void Regist();
 
 
 #endif /* Game_h */

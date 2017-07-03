@@ -14,31 +14,33 @@
 #include "CharPicture.h"
 
 
-#include <time.h>
-
-
-
-
 
 
 
 
 int main(int argc, const char * argv[]) {
-    //CreateCat();
-
     
-    SetTitle("笑傲江湖之-精忠报国");
+    
+    SetTitle("笑傲江湖之-小宝铁狼");
     Init();
-    ShowWelcome("欢迎来到笑傲江湖世界!!!\n");
-    ShowMap();
-    ShowInformation();
-    ShowMainMenu();
+    
+    HomePage();
+    
+    
+    
+//    Init();
+//    ShowWelcome("欢迎来到笑傲江湖世界!!!\n");
+//    ShowMap();
+//    ShowInformation();
+//    ShowMainMenu();
     
   
-   
+
     
     
     return 0;
 }
+
+
 
 
